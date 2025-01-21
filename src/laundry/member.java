@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
  *
  * @author ASUS TUF
  */
-public class member extends javax.swing.JFrame {
+public class member extends javax.swing.JFrame { 
     private DefaultTableModel model = null; //mengatur model tabel GUI
 
     /**
@@ -52,8 +52,9 @@ public class member extends javax.swing.JFrame {
                 String nama = rs.getString("nama_member"); // mengambil data dari kolom nama_member dan menyimpannya dalam variable nama
                 String nohp = rs.getString("no_telepon");
                 String alamat = rs.getString("alamat");
+                int poinSekarang = rs.getInt("poin");
 
-                Object[] rowData = {id_member, nama, nohp, alamat}; // array yg diguunakan untuk menyimpan satu baris dataa yang akan ditambahkan ke dalam tabel model
+                Object[] rowData = {id_member, nama, nohp, alamat, poinSekarang}; // array yg digunakan untuk menyimpan satu baris data yang akan ditambahkan ke dalam tabel model
                 model.addRow(rowData); //menambahkan rowData ke DefaultTabelModel untuk ditampilan ke tabel GUI
    
             }
@@ -88,6 +89,55 @@ public class member extends javax.swing.JFrame {
             btnLaporan.setEnabled(false);
         } //mengatur fitur yang dapat diakses role nya
     }
+    
+
+
+    public void tambahPoin(int idMember) {
+        PreparedStatement st = null;
+        ResultSet rs = null;
+    
+        try {
+            Connection conn = DatabaseConnection.getConnection();  
+
+            // Query untuk mengambil poin member
+            String querySelect = "SELECT poin FROM member WHERE id_member = ?";
+            st = conn.prepareStatement(querySelect);
+            st.setInt(1, idMember);
+            rs = st.executeQuery();  // Menggunakan executeQuery() untuk SELECT
+
+            if (rs.next()) {
+                int poinSekarang = rs.getInt("poin");
+
+                // Menambah 1 poin
+                int poinBaru = poinSekarang + 1;
+
+                // Query untuk mengupdate poin member
+                String queryUpdate = "UPDATE member SET poin = ? WHERE id_member = ?";
+                st = conn.prepareStatement(queryUpdate);
+                st.setInt(1, poinBaru);
+                st.setInt(2, idMember);
+                st.executeUpdate(); // Menggunakan executeUpdate() untuk UPDATE
+                System.out.println("Poin berhasil ditambahkan!");
+            } else {
+                System.out.println("Member tidak ditemukan!");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (st != null) st.close();
+                // Jangan menutup koneksi di sini jika koneksi masih akan digunakan lagi di tempat lain
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    
+    
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -122,6 +172,7 @@ public class member extends javax.swing.JFrame {
         txtNoTelepon = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblData = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
         btnKembali = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -174,6 +225,11 @@ public class member extends javax.swing.JFrame {
         btnLaporan.setFont(new java.awt.Font("Swis721 BT", 1, 14)); // NOI18N
         btnLaporan.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Graph Report.png"))); // NOI18N
         btnLaporan.setText("Laporan");
+        btnLaporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLaporanActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -242,6 +298,9 @@ public class member extends javax.swing.JFrame {
             }
         });
         txtCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCariKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtCariKeyTyped(evt);
             }
@@ -357,7 +416,7 @@ public class member extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtAlamat, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGap(38, 38, 38)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -366,9 +425,10 @@ public class member extends javax.swing.JFrame {
                         .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(19, 19, 19))
+                .addGap(31, 31, 31))
         );
 
+        tblData.setFont(new java.awt.Font("Swis721 BT", 0, 14)); // NOI18N
         tblData.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -387,16 +447,6 @@ public class member extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tblData);
 
-        btnKembali.setBackground(new java.awt.Color(55, 67, 117));
-        btnKembali.setFont(new java.awt.Font("Swis721 BT", 1, 14)); // NOI18N
-        btnKembali.setForeground(new java.awt.Color(255, 255, 255));
-        btnKembali.setText("Kembali");
-        btnKembali.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnKembaliActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -406,8 +456,7 @@ public class member extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 943, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnKembali, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -418,13 +467,38 @@ public class member extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(14, 14, 14))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 560));
+
+        btnKembali.setBackground(new java.awt.Color(55, 67, 117));
+        btnKembali.setFont(new java.awt.Font("Swis721 BT", 1, 14)); // NOI18N
+        btnKembali.setForeground(new java.awt.Color(255, 255, 255));
+        btnKembali.setText("Kembali");
+        btnKembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKembaliActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 854, Short.MAX_VALUE)
+                .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(btnKembali, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 15, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 570, 940, 50));
 
         pack();
         setLocationRelativeTo(null);
@@ -484,13 +558,13 @@ public class member extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSimpanActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        int selectedRow = tblData.getSelectedRow(); //memilih baris dalam tabel GUI
+        int selectedRow = tblData.getSelectedRow(); //memilih baris dalam tabel 
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Pilih baris yang ingin diperbarui");
             return;
         } //mengecek apakah baris telah dipih atau belum
         
-        int id_member = (int) tblData.getValueAt(selectedRow, 0);  //untuk mendapatkan id_member dari baris yang dipilih
+        int id_member = (int) tblData.getValueAt(selectedRow, 0);  //getValueAt : mengambil data sesuai dengan baris yang dipilih , kolom index 0 
         String nama = txtNama.getText();
         String nohp = txtNoTelepon.getText();
         String alamat = txtAlamat.getText(); //mengambil data yg diperbarui di form input
@@ -525,7 +599,7 @@ public class member extends javax.swing.JFrame {
             return;
         }
         
-        int confirm = JOptionPane.showConfirmDialog(this, "Apakah anda yakin menghapus layanan ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION );
+        int confirm = JOptionPane.showConfirmDialog(this, "Apakah anda yakin menghapus member ini?", "Konfirmasi", JOptionPane.YES_NO_OPTION );
         if(confirm == JOptionPane.YES_NO_OPTION){
             String id = tblData.getValueAt(selectedRow, 0).toString();
             
@@ -609,6 +683,11 @@ public class member extends javax.swing.JFrame {
 
     private void txtCariKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyTyped
         // TODO add your handling code here:
+        
+    }//GEN-LAST:event_txtCariKeyTyped
+
+    private void txtCariKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCariKeyReleased
+        // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) tblData.getModel();// mengambil model data dari tabel tblData
         model.setRowCount(0);
         
@@ -640,7 +719,14 @@ public class member extends javax.swing.JFrame {
         } catch (Exception e){
             Logger.getLogger(layanan.class.getName()).log(Level.SEVERE,null, e);
         }
-    }//GEN-LAST:event_txtCariKeyTyped
+    }//GEN-LAST:event_txtCariKeyReleased
+
+    private void btnLaporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLaporanActionPerformed
+        // TODO add your handling code here:
+        laporan laporan = new laporan();
+        laporan.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnLaporanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -696,6 +782,7 @@ public class member extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblData;
     private javax.swing.JTextField txtAlamat;

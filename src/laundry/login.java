@@ -4,6 +4,7 @@
  */
 package laundry;
 import Connection.DatabaseConnection;
+import java.awt.Color;
 import java.awt.HeadlessException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,15 +14,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author ASUS TUF
- */
+
+
 public class login extends javax.swing.JFrame {
 
-    /**
-     * Creates new form login
-     */
+
     public login() {
         this.connection = (Connection) new DatabaseConnection().getConnection();
         initComponents();
@@ -33,27 +30,38 @@ public class login extends javax.swing.JFrame {
 
      
     public class UserSession {
-    private static int idUser;
-    private static String role;
+        private static int idUser;
+        private static String role;
+        private static String username;
     
 
-    public static int getIdUser() {
-        return idUser;
-    }
+        public static int getIdUser() {
+            return idUser;
+        }
 
-    public static void setIdUser(int id) {
-        UserSession.idUser = id;
+        public static void setIdUser(int id) {
+            UserSession.idUser = id;
+        }
+    
+        public static String getRole(){
+            return role;
+        }
+    
+        public static void setRole(String role) {
+            UserSession.role = role;
+        }
+        
+        public static String getUsername(){
+            return username;
+        }
+    
+        public static void setUsername(String username) {
+            UserSession.username = username;
+        }
+    
     }
     
-    public static String getRole(){
-        return role;
-    }
     
-    public static void setRole(String role) {
-         UserSession.role = role;
-    }
-    
-}
      
      
 
@@ -116,6 +124,9 @@ public class login extends javax.swing.JFrame {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtUsernameFocusGained(evt);
             }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtUsernameFocusLost(evt);
+            }
         });
         txtUsername.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,6 +142,9 @@ public class login extends javax.swing.JFrame {
         txtPassword.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 txtPasswordFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtPasswordFocusLost(evt);
             }
         });
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
@@ -205,7 +219,10 @@ public class login extends javax.swing.JFrame {
 
     private void txtUsernameFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusGained
         // TODO add your handling code here:
+        if (txtUsername.getText().equals("Username")) {
         txtUsername.setText("");
+        txtUsername.setForeground(Color.BLACK);
+        }// Ubah warna teks ke normal
     }//GEN-LAST:event_txtUsernameFocusGained
 
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
@@ -215,7 +232,11 @@ public class login extends javax.swing.JFrame {
 
     private void txtPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusGained
         // TODO add your handling code here:
+        if (txtPassword.getText().equals("Password")) {
         txtPassword.setText("");
+        txtPassword.setForeground(Color.BLACK);
+        }// Ubah warna teks ke normal
+
     }//GEN-LAST:event_txtPasswordFocusGained
 
     private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
@@ -254,17 +275,19 @@ public class login extends javax.swing.JFrame {
                 System.out.println("ID User: " + idUser);
                 
                 String role = result.getString("role");
+                String usernameResult  = result.getString("username");
                 
                 
                 // Simpan id_user di UserSession
                 UserSession.setIdUser(idUser);
                 UserSession.setRole(role);
+                UserSession.setUsername(usernameResult);
                 
                 
 
                 // Panggil dashboard dan tampilkan
-                dashboard dashboard = new dashboard();
-                dashboard.setVisible(true);
+                dashboard dashboard1 = new dashboard();
+                dashboard1.setVisible(true);
 
                 // Tutup form login
                 this.dispose();
@@ -303,6 +326,22 @@ public class login extends javax.swing.JFrame {
         hidePassword.setVisible(false);
         txtPassword.setEchoChar('*');
     }//GEN-LAST:event_hidePasswordMouseClicked
+
+    private void txtUsernameFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtUsernameFocusLost
+        // TODO add your handling code here:
+        if (txtUsername.getText().isEmpty()) {
+        txtUsername.setText("Username");
+        txtUsername.setForeground(Color.GRAY); // Ubah warna teks ke warna placeholder
+    }
+    }//GEN-LAST:event_txtUsernameFocusLost
+
+    private void txtPasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusLost
+        // TODO add your handling code here:
+        if (txtPassword.getText().isEmpty()) {
+        txtPassword.setText("Password");
+        txtPassword.setForeground(Color.GRAY); // Ubah warna teks ke warna placeholder
+    }
+    }//GEN-LAST:event_txtPasswordFocusLost
 
     /**
      * @param args the command line arguments
