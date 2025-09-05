@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="02327326-3413-4664-baea-8578dbeb0abe">
+	<property name="ireport.zoom" value="1.464100000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="bulan" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="tahun" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    t.id_transaksi,
+    t.tanggal,
+    t.berat,
+    t.diskon,
+    t.total,
+    m.nama_member,
+    l.jenis_layanan,
+    t.user_id_user
+FROM 
+    transaksi t
+JOIN 
+    member m ON t.member_id_member = m.id_member
+JOIN 
+    layanan l ON t.layanan_id_layanan = l.id_layanan
+WHERE 
+MONTH(t.tanggal) = $P{bulan} 
+AND YEAR(t.tanggal) = $P{tahun}
+ORDER BY 
+    t.id_transaksi ASC;]]>
+	</queryString>
+	<field name="id_transaksi" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tanggal" class="java.time.LocalDateTime">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="berat" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="diskon" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_member" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis_layanan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="user_id_user" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="552" height="79" uuid="384e4f30-9380-4a31-b35e-37d4da9f6a6d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LAPORAN TRANSAKSI]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="22" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="59" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="7b26fd3e-b06f-4deb-8945-b47b8546518b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID Member]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="59" y="0" width="103" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="0853cf3a-03c4-4d1f-8dec-04487974f21c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="162" y="0" width="56" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="a384f6d8-5618-4608-885b-b0c8ff1aab16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Berat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="218" y="0" width="58" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="5f138da3-1e81-437e-b3e6-47bfe1f463d9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Diskon]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="276" y="0" width="69" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="73398726-06b9-462e-9303-9ce53bfcadc9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="345" y="0" width="69" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="9a5b9261-f1b7-48d8-848f-5a562c2e9728"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nama Member]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="414" y="0" width="69" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="0f6082a2-5c6a-432a-b7e4-f549fc45b596"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Jenis Layanan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="483" y="0" width="69" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="885c43ea-883a-4b2c-9456-3448320c6980"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID User]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="43" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="59" height="20" uuid="92e1c1b9-4d1a-48e7-8123-baf4581ffa6a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{id_transaksi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="59" y="0" width="103" height="20" uuid="9d7957c6-4a9a-43d6-9a9b-b480ce188d55"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT"/>
+				</textElement>
+				<textFieldExpression><![CDATA[""+$F{tanggal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="0" width="56" height="20" uuid="5c392dfa-be9c-482b-ba44-e40b537675f7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{berat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="218" y="0" width="58" height="20" uuid="9cb7f6f9-dd92-4bcb-bfdf-a00a8d1a8ce5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{diskon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="69" height="20" uuid="fd50fa2f-3322-4a61-a35b-6bb27969a539"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="345" y="0" width="69" height="20" uuid="8999c4b3-3d47-4fbb-95aa-46faef60a3b4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nama_member}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="0" width="69" height="20" uuid="83c8ea21-7be3-4af2-b9be-a040d8728d09"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{jenis_layanan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="483" y="0" width="69" height="20" uuid="cd53fac0-718f-4868-b7c3-f80666718ebc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{user_id_user}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="0" width="555" height="1" uuid="0c071a3e-09d1-42d1-aa71-2a2941c123c5"/>
+			</line>
+			<textField>
+				<reportElement x="0" y="34" width="100" height="20" uuid="3f0d637e-f950-42b5-a461-e0d7d0677297"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="436" y="14" width="119" height="20" uuid="b7c72802-e5a0-4e4b-bb7e-ac1674c3331a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT"/>
+				</textElement>
+				<text><![CDATA[Tanggal Cetak]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="436" y="34" width="119" height="20" uuid="9e253117-871f-4ce0-9cce-2321865a6692"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Swis721 BT"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(new Date())]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

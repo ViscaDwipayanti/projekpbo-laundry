@@ -516,14 +516,14 @@ public void showTotal(int idTransaksi) {
         // Menyiapkan parameter
         HashMap<String, Object> parameters = new HashMap<>();
 
-        // Jika id_transaksi harus berupa angka di laporan Jasper, konversikan ke Integer
+        
         try {
             Integer idTransaksiInt = Integer.parseInt(id_transaksi);
             parameters.put("id_transaksi", idTransaksiInt);
     } catch (NumberFormatException e) {
-        // Menampilkan pesan error jika id_transaksi bukan angka
+        
         JOptionPane.showMessageDialog(this, "Error: id_transaksi harus berupa angka", "Error", JOptionPane.ERROR_MESSAGE);
-        return; // Keluar dari blok try-catch jika terjadi kesalahan format angka
+        return; 
     }
     
     System.out.println("id Transaksi: " + id_transaksi);
@@ -535,7 +535,7 @@ public void showTotal(int idTransaksi) {
     JasperViewer viewer = new JasperViewer(print, false);
     viewer.setVisible(true);      
 } catch (Exception e) {
-    // Menampilkan pesan error jika terjadi exception
+    
     JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 }
 

@@ -194,7 +194,7 @@ public final class transaksi extends javax.swing.JFrame {
         // Tampilkan diskon di txtDiskon
         txtDiskon.setText(String.valueOf(diskon));
 
-        // Tutup resource
+        
         rsPoin.close();
         stPoin.close();
     } catch (Exception e) {

@@ -6,15 +6,16 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 public class DatabaseConnection {
     private static Connection connection;
 
     public static Connection getConnection() {
         if (connection == null) {
             try {
-                String url = "jdbc:mysql://localhost:3306/applaundry"; // Sesuai dengan URL database
-                String user = "root"; // Gunakan username dalam database
-                String password = ""; // Gunakan password dalam database
+                String url = "jdbc:mysql://localhost:3306/applaundry"; // Ganti dengan URL database Anda
+                String user = "root"; // Ganti dengan username database Anda
+                String password = ""; // Ganti dengan password database Anda
                 
                 connection = DriverManager.getConnection(url, user, password);
                 System.out.println("Koneksi berhasil!");

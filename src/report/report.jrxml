@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd53ffd6-c618-41c6-a3cb-43e138505711">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Bulan" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Tahun" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT 
+    t.id_transaksi,
+    t.tanggal,
+    t.berat,
+    t.diskon,
+    t.total,
+    m.nama_member,
+    l.jenis_layanan,
+    t.user_id_user
+FROM 
+    transaksi t
+JOIN 
+    member m ON t.member_id_member = m.id_member
+JOIN 
+    layanan l ON t.layanan_id_layanan = l.id_layanan
+ORDER BY 
+    t.id_transaksi ASC;]]>
+	</queryString>
+	<field name="id_transaksi" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tanggal" class="java.time.LocalDateTime">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="berat" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="diskon" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_member" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis_layanan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="user_id_user" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="79" uuid="6fc0b94e-b280-459b-b44e-d33f9953bf3d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Laporan Transaksi]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="12" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="69" height="20" uuid="a204664a-5768-4554-8215-20f44dea6508"/>
+				<text><![CDATA[id_transaksi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="0" width="69" height="20" uuid="a52c079f-cbc7-4334-826b-959051a4b262"/>
+				<text><![CDATA[tanggal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="138" y="0" width="69" height="20" uuid="20e26b13-feb4-4080-b8cd-83aca19ca095"/>
+				<text><![CDATA[berat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="207" y="0" width="69" height="20" uuid="b41db1fd-b882-4539-8dac-cbf1b0f6e11c"/>
+				<text><![CDATA[diskon]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="0" width="69" height="20" uuid="dc5fe064-ff6d-491c-8409-5237786f3e2f"/>
+				<text><![CDATA[total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="0" width="69" height="20" uuid="bcebb87a-7f85-4a13-9dfd-cc8ea2369861"/>
+				<text><![CDATA[nama_member]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="0" width="69" height="20" uuid="12b6e0a7-aa2e-4922-892b-626943376c34"/>
+				<text><![CDATA[jenis_layanan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="483" y="0" width="69" height="20" uuid="fd2da465-479e-4a75-a121-6660761664d3"/>
+				<text><![CDATA[user_id_user]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="56" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="69" height="20" uuid="9c7aa12b-8f15-4dd1-9589-e69c9675bb9b"/>
+				<textFieldExpression><![CDATA[$F{id_transaksi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="69" y="0" width="69" height="20" uuid="7453c860-ee9e-4a12-8522-74006a47c233"/>
+				<textFieldExpression><![CDATA[""+$F{tanggal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="138" y="0" width="69" height="20" uuid="db93cdaf-a402-4412-9582-031670cd545e"/>
+				<textFieldExpression><![CDATA[$F{berat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="207" y="0" width="69" height="20" uuid="b68b80bc-2cea-43cd-abb5-4da3bb37623d"/>
+				<textFieldExpression><![CDATA[$F{diskon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="0" width="69" height="20" uuid="775bce1e-9fbd-4373-a063-2f345f7aaa73"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="345" y="0" width="69" height="20" uuid="57d0b5bc-2855-410f-8322-8bafe236e492"/>
+				<textFieldExpression><![CDATA[$F{nama_member}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="0" width="69" height="20" uuid="fd91b34e-4ee2-4f7e-aa4b-2074fb7b30a2"/>
+				<textFieldExpression><![CDATA[$F{jenis_layanan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="483" y="0" width="69" height="20" uuid="c88d3ca5-f349-4545-8c7b-91fd131dd5ba"/>
+				<textFieldExpression><![CDATA[$F{user_id_user}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

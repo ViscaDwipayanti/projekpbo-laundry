@@ -103,7 +103,7 @@ public class member extends javax.swing.JFrame {
             String querySelect = "SELECT poin FROM member WHERE id_member = ?";
             st = conn.prepareStatement(querySelect);
             st.setInt(1, idMember);
-            rs = st.executeQuery();  // Menggunakan executeQuery() untuk SELECT
+            rs = st.executeQuery();  
 
             if (rs.next()) {
                 int poinSekarang = rs.getInt("poin");
@@ -116,7 +116,7 @@ public class member extends javax.swing.JFrame {
                 st = conn.prepareStatement(queryUpdate);
                 st.setInt(1, poinBaru);
                 st.setInt(2, idMember);
-                st.executeUpdate(); // Menggunakan executeUpdate() untuk UPDATE
+                st.executeUpdate(); 
                 System.out.println("Poin berhasil ditambahkan!");
             } else {
                 System.out.println("Member tidak ditemukan!");
@@ -128,7 +128,7 @@ public class member extends javax.swing.JFrame {
             try {
                 if (rs != null) rs.close();
                 if (st != null) st.close();
-                // Jangan menutup koneksi di sini jika koneksi masih akan digunakan lagi di tempat lain
+               
             } catch (Exception e) {
                 e.printStackTrace();
             }

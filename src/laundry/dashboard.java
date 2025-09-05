@@ -296,13 +296,13 @@ public class dashboard extends javax.swing.JFrame {
                      "WHERE DATE(transaksi.tanggal) = ?";
                          
         PreparedStatement st = connection.prepareStatement(sql);
-        st.setString(1, waktuJakarta); // Menggunakan tanggal Jakarta
+        st.setString(1, waktuJakarta); 
 
         ResultSet rs = st.executeQuery();
 
         if (rs.next()) {
             int dataPendapatanHarian = rs.getInt("pendapatan");
-            txtPendapatan.setText("Rp. " + String.valueOf(dataPendapatanHarian)); // Set jumlah ke textfield
+            txtPendapatan.setText("Rp. " + String.valueOf(dataPendapatanHarian)); 
         }
 
         rs.close();

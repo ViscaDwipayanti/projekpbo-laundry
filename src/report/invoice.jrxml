@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="396" pageHeight="432" columnWidth="356" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f57ccdb9-ff72-44cb-8180-d25d837c34d6">
+	<property name="ireport.zoom" value="1.1000000000000003"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id_transaksi" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT t.id_transaksi, t.tanggal, t.berat, t.total, l.jenis_layanan, m.nama_member, m.alamat, m.no_telepon, dt.tanggal_ambil
+FROM transaksi t
+JOIN member m ON t.member_id_member = m.id_member
+JOIN layanan l ON t.layanan_id_layanan = l.id_layanan
+JOIN detail_transaksi dt ON dt.transaksi_id_transaksi = t.id_transaksi
+WHERE t.id_transaksi =$P{id_transaksi}]]>
+	</queryString>
+	<field name="id_transaksi" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tanggal" class="java.time.LocalDateTime">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="berat" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="jenis_layanan" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nama_member" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="alamat" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="no_telepon" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tanggal_ambil" class="java.time.LocalDateTime">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="68" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="0" width="354" height="56" uuid="8c0d5eca-e58f-48f2-a26f-1ac32c927490"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[INVOICE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="82" splitType="Stretch">
+			<staticText>
+				<reportElement x="9" y="21" width="59" height="20" uuid="d7b6408b-709e-4e27-a256-383060acb8f8"/>
+				<text><![CDATA[No Telepon]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="41" width="59" height="20" uuid="f69a8207-3c4a-4296-8b62-6f3daf6cd5e7"/>
+				<text><![CDATA[Alamat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="0" width="59" height="20" uuid="77762a32-3518-4f6c-9ffc-00cd471383f7"/>
+				<text><![CDATA[Nama]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="22" width="97" height="20" uuid="d55f177c-07a1-450d-a137-50ffa9440196"/>
+				<textFieldExpression><![CDATA[$F{no_telepon}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="43" width="97" height="20" uuid="b93fbb50-5b34-4df5-992d-3139a41c2be1"/>
+				<textFieldExpression><![CDATA[$F{alamat}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="177" y="0" width="63" height="20" uuid="85f5bcab-977a-4ef7-a095-f37ad675faf5"/>
+				<text><![CDATA[ID Transaksi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="177" y="41" width="63" height="20" uuid="08d081bb-e525-4579-a3f5-72b349b003e1"/>
+				<text><![CDATA[Tgl Ambil]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="246" y="43" width="100" height="20" uuid="e8d355e5-5826-4e0a-ae8d-853d998e4c85"/>
+				<textFieldExpression><![CDATA[""+$F{tanggal_ambil}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="177" y="20" width="63" height="20" uuid="06e258c7-4647-47d4-91a1-81958e2642fe"/>
+				<text><![CDATA[Tgl Transaksi]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="246" y="2" width="100" height="20" uuid="66bfba66-6750-4733-9e67-b7377f3573ff"/>
+				<textFieldExpression><![CDATA[$F{id_transaksi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="246" y="22" width="100" height="20" uuid="cfbc8dc9-744c-4729-82d6-3ef9d58d8cd1"/>
+				<textFieldExpression><![CDATA[""+$F{tanggal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="1" width="97" height="20" uuid="d2272e70-0905-42b1-9014-3bd3de7b2eab"/>
+				<textFieldExpression><![CDATA[$F{nama_member}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="2" y="0" width="153" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="b1f2a151-896a-4bcc-ad8d-8608f9e2f8f4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Jenis Layanan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="155" y="0" width="100" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="407b43e5-6f3f-4ec5-a613-f53f3173f012"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Berat]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="255" y="0" width="101" height="20" forecolor="#FFFFFF" backcolor="#333333" uuid="0da717d1-cb4e-4978-895b-349c1a407047"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="44" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="153" height="20" uuid="00abc02d-f12a-43dd-99b3-6a93604dddd9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jenis_layanan}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="155" y="0" width="100" height="20" uuid="09ce37fd-213f-49de-bae9-3da71ee61357"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{berat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="255" y="0" width="101" height="20" uuid="278d7a06-02e9-4c60-b169-145879b79908"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="50"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="50"/>
+	</pageFooter>
+</jasperReport>
